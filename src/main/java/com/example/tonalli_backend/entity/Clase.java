@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "clases")
+@Entity
 public class Clase {
 
     @Id
@@ -37,9 +39,6 @@ public class Clase {
 
     @Column(name = "codigo_clase", nullable = false, unique = true)
     private String codigoClase;
-
-    @Column(name = "qr_codigo")
-    private String qrCodigo;
 
     // --- Relación Propietaria (Owning Side) N-a-1 ---
     @ManyToOne(fetch = FetchType.LAZY)

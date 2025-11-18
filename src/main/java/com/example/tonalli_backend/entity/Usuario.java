@@ -46,7 +46,6 @@ public class Usuario implements UserDetails {
 
     private String rol;
 
-    @Lob
     @Column(name = "avatar_bits")
     private byte[] avatarBits;
 

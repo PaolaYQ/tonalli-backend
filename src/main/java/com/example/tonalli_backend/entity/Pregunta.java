@@ -31,7 +31,7 @@ public class Pregunta {
     @Column(name = "opcion_d", nullable = false)
     private String opcionD;
 
-    @Column(name = "respuesta_correcta", nullable = false)
+    @Column(name = "respuesta_correcta", nullable = false, columnDefinition = "char(1)")
     private String respuestaCorrecta; // Ej. "A", "B", "C", o "D"
 
     // --- Relación Propietaria (Owning Side) N-a-1 ---

@@ -1,0 +1,13 @@
+package com.example.tonalli_backend.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateClassRequest {
+    private String nombreClase;
+    private Short grado; // Usamos Short porque es un número pequeño (1-6)
+}
