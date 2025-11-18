@@ -4,15 +4,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "maestra")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Maestro {
@@ -22,7 +25,8 @@ public class Maestro {
     private Integer idMaestra;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @MapsId
+    @JoinColumn(name = "id_maestra")
     private Usuario usuario;
 
 }
