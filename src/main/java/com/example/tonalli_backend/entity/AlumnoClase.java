@@ -1,13 +1,16 @@
 package com.example.tonalli_backend.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "alumno_clase")
+@EqualsAndHashCode(exclude = { "alumno", "clase" })
 public class AlumnoClase {
 
     @Id

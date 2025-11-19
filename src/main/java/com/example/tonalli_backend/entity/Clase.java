@@ -16,14 +16,19 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @Builder
+@Getter 
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "clases")
 @Entity
+@EqualsAndHashCode(exclude = { "maestro", "alumnoClases", "actividadesAsignadas" })
 public class Clase {
 
     @Id
