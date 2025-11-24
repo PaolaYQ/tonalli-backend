@@ -18,12 +18,13 @@ public class AlumnoClase {
     @Column(name = "id_alumno_clase")
     private Integer id;
 
-    // --- Relaciones Propietarias (Owning Side) N-a-1 ---
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_alumno", nullable = false)
+    @ToString.Exclude // <-- Importante: Rompe el ciclo al imprimir logs
     private Alumno alumno;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_clase", nullable = false)
+    @ToString.Exclude // <-- Importante
     private Clase clase;
 }

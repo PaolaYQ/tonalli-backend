@@ -50,7 +50,7 @@ public class SecurityConfig {
 
                 // RECOMENDACIÓN: Sé específico con el origen para evitar problemas con
                 // credenciales
-                configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+                configuration.setAllowedOriginPatterns(List.of("*" ));
 
                 configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
