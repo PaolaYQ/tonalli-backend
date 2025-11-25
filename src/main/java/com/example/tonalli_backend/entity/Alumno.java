@@ -16,8 +16,9 @@ import lombok.*;
 @EqualsAndHashCode(exclude = {
         "usuario",
         "alumnoClases",
-        // Si no tienes estos campos en tu clase todavía, bórralos del exclude para que no marque error:
-        "intentos", 
+        // Si no tienes estos campos en tu clase todavía, bórralos del exclude para que
+        // no marque error:
+        "intentos",
         "alumnoMedallas",
         "alumnoItems"
 })
@@ -43,7 +44,14 @@ public class Alumno {
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude // <-- Recomendado
-    private Set<AlumnoClase> alumnoClases = new HashSet<>(); 
+    private Set<AlumnoClase> alumnoClases = new HashSet<>();
 
-    // ... Aquí irían tus otros Sets (intentos, medallas, etc.) si los tienes definidos
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude
+    private Set<AlumnoMedalla> alumnoMedallas = new HashSet<>();
+  
+
+    // ... Aquí irían tus otros Sets (intentos, medallas, etc.) si los tienes
+    // definidos
 }

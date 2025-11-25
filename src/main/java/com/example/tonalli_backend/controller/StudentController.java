@@ -2,6 +2,7 @@ package com.example.tonalli_backend.controller;
 
 import com.example.tonalli_backend.dto.ActivitiesDashboardResponse;
 import com.example.tonalli_backend.dto.QuizDataResponse;
+import com.example.tonalli_backend.dto.StudentProfileDetailResponse;
 import com.example.tonalli_backend.dto.SubmitAttemptRequest;
 import com.example.tonalli_backend.dto.SubmitAttemptResponse;
 import com.example.tonalli_backend.service.StudentService;
@@ -47,5 +48,11 @@ public class StudentController {
             Authentication authentication) {
         String correo = authentication.getName();
         return ResponseEntity.ok(studentService.submitAttempt(correo, request));
+    }
+
+    // GET /api/v1/student/profile-detail
+    @GetMapping("/profile-detail")
+    public ResponseEntity<StudentProfileDetailResponse> getProfileDetail(Authentication authentication) {
+        return ResponseEntity.ok(studentService.getProfileDetail(authentication.getName()));
     }
 }

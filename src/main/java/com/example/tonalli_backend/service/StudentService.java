@@ -2,8 +2,10 @@ package com.example.tonalli_backend.service;
 
 import com.example.tonalli_backend.dto.ActivitiesDashboardResponse;
 import com.example.tonalli_backend.dto.ActivityItem;
+import com.example.tonalli_backend.dto.MedalResponse;
 import com.example.tonalli_backend.dto.QuestionDTO;
 import com.example.tonalli_backend.dto.QuizDataResponse;
+import com.example.tonalli_backend.dto.StudentProfileDetailResponse;
 import com.example.tonalli_backend.dto.SubmitAttemptRequest;
 import com.example.tonalli_backend.dto.SubmitAttemptResponse;
 import com.example.tonalli_backend.entity.Actividad;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -297,6 +300,45 @@ public class StudentService {
                 .medallaGanada(medallaGanada)
                 .actividadCompletada(totalFinal == 3)
                 .mensaje(mensaje)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public StudentProfileDetailResponse getProfileDetail(String email) {
+
+        Usuario user = userRepository.findByCorreo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        Alumno alumno = user.getAlumno();
+        if (alumno == null)
+            throw new RuntimeException("Perfil de alumno no encontrado");
+
+        // 1. Convertir Avatar (Bits -> Base64)
+        String avatarDataUri = null;
+        if (user.getAvatarBits() != null && user.getAvatarBits().length > 0) {
+            String base64Image = Base64.getEncoder().encodeToString(user.getAvatarBits());
+            avatarDataUri = "data:image/jpeg;base64," + base64Image;
+        }
+
+        // 2. Mapear Medallas
+        List<MedalResponse> misMedallas = alumno.getAlumnoMedallas().stream()
+                .map(am -> MedalResponse.builder()
+                        .idMedalla(am.getMedalla().getIdMedalla())
+                        .nombre(am.getMedalla().getNombre())
+                        .descripcion(am.getMedalla().getDescripcion())
+                        .iconoUrl(am.getMedalla().getIconoUrl())
+                        .tema(am.getMedalla().getTema())
+                        .fechaObtenida(am.getFechaObtenida())
+                        .build())
+                .collect(Collectors.toList());
+
+        return StudentProfileDetailResponse.builder()
+                .nombre(user.getNombre())
+                .correo(user.getCorreo())
+                .avatarUrl(avatarDataUri)
+                .estrellasTotales(alumno.getEstrellasTotales())
+                .estrellasDisponibles(alumno.getEstrellasDisponibles())
+                .medallas(misMedallas)
                 .build();
     }
 }
